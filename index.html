@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Cairo',sans-serif;
+}
+
+html,
+body{
+    width:100%;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+body{
+    background:linear-gradient(135deg,#050505,#140414,#220821);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    padding:20px;
+}
+
+/* الخلفية */
+
+.hearts{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.heart{
+    position:absolute;
+    bottom:-20px;
+    color:#ff4f81;
+    animation:float 8s linear infinite;
+    opacity:.7;
+}
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0) rotate(0deg);
+        opacity:0;
+    }
+
+    30%{
+        opacity:1;
+    }
+
+    100%{
+        transform:translateY(-110vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+/* الكارد */
+
+.card{
+    width:100%;
+    max-width:430px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(12px);
+    border-radius:28px;
+    padding:30px 22px;
+    text-align:center;
+    position:relative;
+    z-index:2;
+    color:white;
+    box-shadow:0 0 30px rgba(255,0,100,.2);
+    animation:show .7s ease;
+}
+
+@keyframes show{
+
+    from{
+        opacity:0;
+        transform:scale(.8);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+/* الإيموجي */
+
+.emoji{
+    font-size:60px;
+    margin-bottom:10px;
+    animation:heartbeat 1s infinite;
+}
+
+@keyframes heartbeat{
+
+    0%{transform:scale(1);}
+    25%{transform:scale(1.1);}
+    50%{transform:scale(1);}
+    75%{transform:scale(1.15);}
+    100%{transform:scale(1);}
+}
+
+/* العنوان */
+
+h1{
+    font-size:clamp(22px,5vw,30px);
+    line-height:1.7;
+}
+
+/* الرسالة */
+
+.messageCard{
+    margin-top:18px;
+    background:rgba(255,255,255,.07);
+    border-radius:18px;
+    padding:14px;
+    font-size:15px;
+    opacity:.95;
+    animation:fade .4s ease;
+}
+
+@keyframes fade{
+
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* الأزرار */
+
+.buttons{
+    margin-top:30px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    position:relative;
+    flex-wrap:wrap;
+    min-height:70px;
+}
+
+button{
+    border:none;
+    padding:14px 22px;
+    border-radius:15px;
+    font-size:15px;
+    cursor:pointer;
+    transition:.3s;
+    font-weight:700;
+}
+
+/* زر الموافقة */
+
+#yesBtn{
+    background:#ff4f81;
+    color:white;
+    box-shadow:0 0 15px rgba(255,79,129,.5);
+}
+
+#yesBtn:hover{
+    transform:scale(1.07);
+}
+
+/* زر الرفض */
+
+#noBtn{
+    background:white;
+    color:black;
+    position:relative;
+}
+
+/* الكارد التاني */
+
+.success{
+    display:none;
+}
+
+.loveText{
+    margin-top:15px;
+    line-height:2;
+    color:#eee;
+    font-size:clamp(14px,3.5vw,16px);
+}
+
+.memory{
+    margin-top:20px;
+    background:rgba(255,255,255,.07);
+    padding:14px;
+    border-radius:18px;
+    text-align:right;
+}
+
+.memory h3{
+    margin-bottom:10px;
+    color:#ff8db2;
+}
+
+.memory p{
+    margin:8px 0;
+    font-size:clamp(13px,3vw,15px);
+}
+
+/* العداد */
+
+.timer{
+    margin-top:22px;
+    font-size:clamp(24px,7vw,36px);
+    color:#ff7aa2;
+    font-weight:bold;
+}
+
+/* النص الصغير */
+
+.small{
+    margin-top:8px;
+    color:#bbb;
+    font-size:14px;
+}
+
+/* النوتوفيكيشن */
+
+.notification{
+    position:fixed;
+    top:20px;
+    right:-400px;
+    background:#ff4f81;
+    color:white;
+    padding:15px 22px;
+    border-radius:18px;
+    box-shadow:0 0 20px rgba(255,79,129,.4);
+    transition:.7s;
+    z-index:999;
+    font-size:14px;
+    max-width:90%;
+}
+
+.notification.show{
+    right:20px;
+}
+
+/* Responsive */
+
+@media(max-width:480px){
+
+    body{
+        padding:15px;
+    }
+
+    .card{
+        padding:25px 18px;
+        border-radius:22px;
+    }
+
+    .emoji{
+        font-size:50px;
+    }
+
+    button{
+        width:100%;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<!-- القلوب -->
+
+<div class="hearts"></div>
+
+<!-- Notification -->
+
+<div class="notification" id="notification">
+    وافقتييي❤️
+</div>
+
+<!-- الكارد الأول -->
+
+<div class="card" id="mainCard">
+
+    <div class="emoji">❤️</div>
+
+    <h1 id="typing"></h1>
+
+    <div class="messageCard" id="messageCard">
+        والله مجهز كل حاجة 🥺❤️
+    </div>
+
+    <div class="buttons">
+
+        <button id="yesBtn">
+            موافق ❤️
+        </button>
+
+        <button id="noBtn">
+            لا 🙄
+        </button>
+
+    </div>
+
+</div>
+
+<!-- الكارد التاني -->
+
+<div class="card success" id="successCard">
+
+    <div class="emoji">💖</div>
+
+    <h1>
+        وافقتيييي ❤️
+    </h1>
+
+    <div class="loveText">
+
+        من أول كلام بينا  
+        وانتي بقيتي أحلى حاجة حصلتلي ❤️
+
+        <br><br>
+
+        ضحكتك.. كلامك.. وجودك  
+        كل حاجة فيكي بتخليني مبسوط 💘
+
+    </div>
+
+    <div class="memory">
+
+        <h3>
+            ذكرياتنا ✨
+        </h3>
+
+        <p>
+            ❤️ أول ضحكة بينا
+        </p>
+
+        <p>
+            💌 أول مرة فضلنا نتكلم للفجر
+        </p>
+
+        <p>
+            🌍 أول مرة حسيت إن الدنيا حلوة بسببك
+        </p>
+
+    </div>
+
+    <div class="timer" id="timer">
+        00:00:00
+    </div>
+
+    <div class="small">
+        الوقت من أول ما وافقتي ❤️
+    </div>
+
+</div>
+
+<script>
+
+/* كتابة الرسالة */
+
+const text =
+"تسمحي أخطفك في Date معايا؟ ❤️";
+
+const typing =
+document.getElementById("typing");
+
+let i = 0;
+
+function typeWriter(){
+
+    if(i < text.length){
+
+        typing.innerHTML += text.charAt(i);
+
+        i++;
+
+        setTimeout(typeWriter,80);
+    }
+}
+
+typeWriter();
+
+/* رسائل الرفض */
+
+const messages = [
+
+"ليه بس؟ 😔",
+"طب فكري تاني 🥺",
+"والله هنبسط جدًا 😭❤️",
+"حرام عليكي قلبي 💔",
+"آخر فرصة 😩",
+"خلاص هموت من الحزن 😭"
+
+];
+
+const noBtn =
+document.getElementById("noBtn");
+
+const msgCard =
+document.getElementById("messageCard");
+
+let index = 0;
+
+function moveButton(){
+
+    const maxX =
+    window.innerWidth < 500 ? 80 : 150;
+
+    const maxY =
+    window.innerWidth < 500 ? 40 : 80;
+
+    const x =
+    Math.floor(Math.random()*maxX) - (maxX / 2);
+
+    const y =
+    Math.floor(Math.random()*maxY) - (maxY / 2);
+
+    noBtn.style.transform =
+    `translate(${x}px, ${y}px)`;
+
+    msgCard.innerHTML =
+    messages[index];
+
+    index++;
+
+    if(index >= messages.length){
+        index = 0;
+    }
+}
+
+noBtn.addEventListener("mouseover",moveButton);
+noBtn.addEventListener("click",moveButton);
+
+/* الموافقة */
+
+const yesBtn =
+document.getElementById("yesBtn");
+
+const mainCard =
+document.getElementById("mainCard");
+
+const successCard =
+document.getElementById("successCard");
+
+const notification =
+document.getElementById("notification");
+
+yesBtn.addEventListener("click",()=>{
+
+    mainCard.style.display = "none";
+
+    successCard.style.display = "block";
+
+    notification.classList.add("show");
+
+    setTimeout(()=>{
+
+        notification.classList.remove("show");
+
+    },3000);
+
+    startTimer();
+
+    confettiEffect();
+});
+
+/* العداد */
+
+function startTimer(){
+
+    let sec = 0;
+
+    setInterval(()=>{
+
+        sec++;
+
+        let h =
+        String(Math.floor(sec/3600)).padStart(2,'0');
+
+        let m =
+        String(Math.floor((sec%3600)/60)).padStart(2,'0');
+
+        let s =
+        String(sec%60).padStart(2,'0');
+
+        document.getElementById("timer").innerHTML =
+        `${h}:${m}:${s}`;
+
+    },1000);
+}
+
+/* القلوب */
+
+const hearts =
+document.querySelector(".hearts");
+
+function createHeart(){
+
+    const heart =
+    document.createElement("div");
+
+    heart.classList.add("heart");
+
+    heart.innerHTML = "❤️";
+
+    heart.style.left =
+    Math.random()*100 + "vw";
+
+    heart.style.fontSize =
+    Math.random()*25 + 15 + "px";
+
+    heart.style.animationDuration =
+    Math.random()*5 + 5 + "s";
+
+    hearts.appendChild(heart);
+
+    setTimeout(()=>{
+
+        heart.remove();
+
+    },10000);
+}
+
+setInterval(createHeart,350);
+
+/* انفجار القلوب */
+
+function confettiEffect(){
+
+    for(let i=0;i<80;i++){
+
+        const heart =
+        document.createElement("div");
+
+        heart.innerHTML = "💖";
+
+        heart.style.position = "absolute";
+
+        heart.style.left =
+        Math.random()*100 + "vw";
+
+        heart.style.top = "-20px";
+
+        heart.style.fontSize =
+        Math.random()*25 + 15 + "px";
+
+        heart.style.animation =
+        "float 4s linear forwards";
+
+        document.body.appendChild(heart);
+
+        setTimeout(()=>{
+
+            heart.remove();
+
+        },4000);
+    }
+}
+
+</script>
+
+</body>
+</html>
